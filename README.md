@@ -6,10 +6,11 @@
 
 > This action is just an extension of the [`test-summary`](https://github.com/test-summary) action
 
-Run your pytests and produce an easy-to-read summary as part of your GitHub Actions CI/CD workflow.  
+Run your pytests and produce an easy-to-read summary as part of your GitHub Actions CI/CD workflow.
 This helps you understand at-a-glance the impact to the changes in your pull requests, and see which changes are introducing new problems.
 
 Pillars:
+
 *   Integrates tests easily with your existing GitHub Actions workflow
 *   Produces summaries from `pytest` output
 *   Customizable to show just a summary, just failed tests, or all test results.
@@ -46,7 +47,7 @@ To set up the `pytest` summary action, just add the following line of YAML to yo
 
 Options are specified on the [`with`](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith) map of the action.
 
-*   **extensions**: the `pytest` extensions to install along `pytest` (optional, by default no extensions are included)  
+*   **extensions**: the `pytest` extensions to install along `pytest` (optional, by default no extensions are included)
 For example:
 
     ```yaml
@@ -55,7 +56,7 @@ For example:
         extensions: pytest-asyncio pytest-cov
     ```
 
-*   **`options`**: the `pytest` options (optional, by default no options are include)  
+*   **`options`**: the `pytest` options (optional, by default no options are include)
 To specify them correctly, please have a look [here](https://docs.pytest.org). For example:
 
     ```yaml
@@ -64,7 +65,7 @@ To specify them correctly, please have a look [here](https://docs.pytest.org). F
         options: -vv -s
     ```
 
-*   **`output`**: the path where to create the output (optional, by default the output will be the workflow summary)  
+*   **`output`**: the path where to create the output (optional, by default the output will be the workflow summary)
   The path to the GitHub-flavored Markdown (GFM) output file to populate with the `pytest` summary markdown data. For example:
 
     ```yaml
@@ -73,7 +74,7 @@ To specify them correctly, please have a look [here](https://docs.pytest.org). F
         output: test-summary.md
     ```
 
-*   **`paths`**: the path to the folders or files containing the tests (optional, by default `tests`)  
+*   **`paths`**: the path to the folders or files containing the tests (optional, by default `tests`)
   You can specify glob patterns, including `**` to match the pattern recursively or specify multiple test paths on multiple lines. For example:
 
     ```yaml
@@ -92,17 +93,21 @@ To specify them correctly, please have a look [here](https://docs.pytest.org). F
         tests/test_file_2.py
     ```
 
-*   **`show`**: which tests have to be shown in the summary (optional, by default just the failed tests are shown in the summary)
+*   **`show`**:  which tests have to be shown in the summary (optional, by default `fail`)
+  This controls whether a test summary table is created or not, as well as what tests are included. It could be all, none, pass, skip, or fail. The default is fail - that is, the summary table will only show the failed tests. For example, if you wanted to show failed and skipped tests:
 
-    *   To show all tests, specify: `show: all`
-    *   To show no tests, specify: `show: none`
+    ```yaml
+    uses: dariocurr/pytest-summary@main
+    with:
+      show: "fail, skip"
+    ```
 
 ---
 
 ## Upload the markdown
 
-The `pytest-summary` step generates a summary in GitHub-flavored Markdown (GFM).  
-Once the markdown is generated, you can upload it as a build artifact, add it to a pull request comment, or add it to an issue.  
+The `pytest-summary` step generates a summary in GitHub-flavored Markdown (GFM).
+Once the markdown is generated, you can upload it as a build artifact, add it to a pull request comment, or add it to an issue.
 For example, to upload the markdown generated in the prior example as a build artifact:
 
 ```yaml
