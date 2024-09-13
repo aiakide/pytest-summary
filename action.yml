@@ -28,10 +28,7 @@ runs:
   using: composite
   steps:
 
-    - run: pip install pytest ${{ inputs.extensions }}
-      shell: bash
-
-    - run: pytest ${{ inputs.options }} --junit-xml=.test_report.xml ${{ inputs.paths }}
+    - run: rye run pytest ${{ inputs.options }} --junit-xml=.test_report.xml ${{ inputs.paths }}
       shell: bash
 
     - uses: test-summary/action@v2.3
